@@ -1,0 +1,26 @@
+language: java
+
+jdk:
+  - openjdk17
+
+install:
+  - mvn -N io.takari:maven:wrapper
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+sudo: false
+
+env:
+  global:
+    - CODECOV_TOKEN='817aea98-3526-459c-8100-c864d679d2b7'
+
+# после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
+# Здесь используется сторонний сервис https://codecov.io/
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+      - rail.himax1982@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
